@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DepresiKU · Deteksi Dini Indikasi Depresi dari Teks Bahasa Indonesia</title>
+  <meta name="description"
+    content="Aplikasi web berbasis IndoBERT untuk membaca sinyal awal depresi dari teks media sosial berbahasa Indonesia. Alat bantu skrining, bukan diagnosis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="/static/style.css" rel="stylesheet">
+</head>
+
+<body data-bs-theme="light">
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="/"><span class="brand-dot"><i
+            class="bi bi-chat-heart"></i></span>DepresiKU</a>
+      <button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#nv"><span
+          class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="nv">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#apa">Apa Itu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#untuk">Kegunaan</a></li>
+          <li class="nav-item"><a class="nav-link" href="#cara">Cara Kerja</a></li>
+          <li class="nav-item"><a class="nav-link" href="#paper">Publikasi Paper</a></li>
+          <li class="nav-item"><a class="nav-link" href="#batas">Batasan</a></li>
+          <li class="nav-item ms-lg-3"><a class="btn btn-sage btn-sm" href="/deteksi"><i class="bi bi-cpu me-1"></i>Buka Aplikasi Deteksi</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+            <span class="eyebrow mb-0">Aplikasi Penelitian · Universitas Dian Nuswantoro</span>
+            <a href="{{ p.url }}" target="_blank" rel="noopener" class="badge rounded-pill text-bg-light border text-decoration-none py-2 px-3 text-mute">
+              <i class="bi bi-journal-text text-success me-1"></i>Sinkron Vol. 10 No. 3 (2026) <i class="bi bi-box-arrow-up-right ms-1"></i>
+            </a>
+          </div>
+          <h1 class="mt-3 mb-3">Membaca sinyal awal depresi dari tulisan sehari-hari</h1>
+          <p class="text-mute fs-5">DepresiKU adalah aplikasi web berbasis kecerdasan buatan yang menganalisis teks
+            media sosial berbahasa Indonesia dan memberi gambaran awal apakah tulisan tersebut mengandung indikasi
+            depresi.</p>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a href="/deteksi" class="btn btn-sage btn-lg">Coba Deteksi <i class="bi bi-arrow-right ms-1"></i></a>
+            <a href="#paper" class="btn btn-ghost btn-lg"><i class="bi bi-file-earmark-pdf text-danger me-1"></i>Baca Paper</a>
+            <a href="#apa" class="btn btn-ghost btn-lg">Pelajari Lebih Lanjut</a>
+          </div>
+          <p class="small text-mute mt-3"><i class="bi bi-shield-check text-success"></i> Alat bantu skrining awal,
+            bukan alat diagnosis.</p>
+        </div>
+        <div class="col-lg-6">
+          <div class="mock">
+            <div class="small text-mute mb-2">Ilustrasi alur analisis</div>
+            <div class="bubble"><i class="bi bi-quote me-1"></i>Akhir-akhir ini aku capek banget dan rasanya sendirian…
+            </div>
+            <div class="flow"><i class="bi bi-arrow-down"></i></div>
+            <div class="d-flex align-items-center gap-3 p-2"><span class="step mb-0"><i class="bi bi-cpu"></i></span>
+              <div><b>IndoBERT</b>
+                <div class="small text-mute">memahami konteks kata dalam kalimat</div>
+              </div>
+            </div>
+            <div class="flow"><i class="bi bi-arrow-down"></i></div>
+            <div class="res res-dep">
+              <div class="small text-mute">Contoh keluaran</div>
+              <div class="res-label mb-1">Terindikasi Depresi</div>
+              <div class="small text-mute">Untuk ditinjau manusia, bukan diagnosis.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="alt">
+    <div class="container">
+      <div class="row">
+        {% for v, l in p.stats %}<div class="col-6 col-md-3 stat"><b>{{ v }}</b><span>{{ l }}</span></div>{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="apa">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6"><span class="eyebrow">Apa Itu DepresiKU</span>
+          <h2 class="mt-3 mb-3">Mesin yang paham bahasa kita, termasuk bahasa gaulnya</h2>
+          <p class="text-mute">Banyak orang menuangkan perasaannya di media sosial. Namun tulisan berbahasa Indonesia di
+            sana penuh singkatan, bahasa gaul, dan campuran bahasa daerah, sehingga sulit dibaca oleh sistem biasa.</p>
+          <p class="text-mute mb-0">DepresiKU memakai <b>IndoBERT</b>, model bahasa yang dilatih khusus untuk bahasa
+            Indonesia, lalu disesuaikan (<i>fine-tuning</i>) dengan 3.874 tweet berlabel agar mengenali pola bahasa yang
+            berkaitan dengan indikasi depresi.</p>
+        </div>
+        <div class="col-lg-6">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div class="cardx">
+                <div class="step"><i class="bi bi-translate"></i></div>
+                <h5 class="h6">Khusus bahasa Indonesia</h5>
+                <p class="small text-mute mb-0">Dilatih pada tweet informal dengan slang, singkatan, dan ejaan tidak
+                  baku.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="cardx">
+                <div class="step"><i class="bi bi-columns-gap"></i></div>
+                <h5 class="h6">Dua pendekatan model</h5>
+                <p class="small text-mute mb-0">IndoBERT fine-tuned (S1) dan IndoBERT + SVM (S2), bisa dibandingkan
+                  langsung.</p>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="cardx">
+                <div class="step"><i class="bi bi-lightning-charge"></i></div>
+                <h5 class="h6">Hasil dalam hitungan detik</h5>
+                <p class="small text-mute mb-0">Tulis teks, tekan tombol, dan lihat label beserta skor keyakinan tiap
+                  model.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="untuk">
+    <div class="container">
+      <span class="eyebrow">Untuk Apa?</span>
+      <h2 class="mt-3 mb-4">Kegunaan aplikasi ini</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-clipboard2-pulse"></i></div>
+            <h5 class="h6">Skrining awal</h5>
+            <p class="small text-mute mb-0">Menandai tulisan yang mungkin perlu ditinjau lebih lanjut oleh manusia atau
+              tenaga profesional.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-mortarboard"></i></div>
+            <h5 class="h6">Riset dan pembelajaran</h5>
+            <p class="small text-mute mb-0">Contoh nyata penerapan IndoBERT dan perbandingannya dengan metode klasik
+              TF-IDF untuk NLP bahasa Indonesia.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-heart"></i></div>
+            <h5 class="h6">Kesadaran kesehatan mental</h5>
+            <p class="small text-mute mb-0">Membantu orang lebih peka terhadap cara mereka mengungkapkan emosi, lalu
+              mendorong mencari bantuan bila perlu.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-diagram-3"></i></div>
+            <h5 class="h6">Dasar pengembangan</h5>
+            <p class="small text-mute mb-0">Fondasi untuk riset lanjutan seperti explainable AI, data multimodal, dan
+              validasi klinis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cara">
+    <div class="container">
+      <span class="eyebrow">Cara Kerja</span>
+      <h2 class="mt-3 mb-4">Tiga langkah sederhana</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="cardx">
+            <div class="step">1</div>
+            <h5 class="h6">Tulis teks</h5>
+            <p class="small text-mute mb-0">Ketik atau tempel tulisan bergaya tweet, atau pilih salah satu contoh yang
+              tersedia.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="cardx">
+            <div class="step">2</div>
+            <h5 class="h6">Model menganalisis</h5>
+            <p class="small text-mute mb-0">IndoBERT mengubah kalimat menjadi representasi makna, lalu diklasifikasikan
+              langsung (S1) atau oleh SVM (S2).</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="cardx">
+            <div class="step">3</div>
+            <h5 class="h6">Baca hasilnya</h5>
+            <p class="small text-mute mb-0">Anda mendapat label <b>Terindikasi Depresi</b> atau <b>Tidak Terindikasi</b>
+              beserta skor tiap model.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-band mt-5">
+        <h2 class="mb-2">Coba langsung sekarang</h2>
+        <p class="text-mute mb-4">Tulis satu kalimat dan lihat bagaimana dua model membacanya.</p>
+        <div class="d-flex flex-wrap gap-2 justify-content-center"><a href="/deteksi" class="btn btn-sage btn-lg">Buka
+            Aplikasi Deteksi</a><a href="/deteksi#performa" class="btn btn-ghost btn-lg">Lihat Performa Model</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="paper">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="eyebrow">Publikasi Ilmiah Terakreditasi</span>
+          <h2 class="mt-3 mb-3">{{ p.title }}</h2>
+          <p class="text-mute mb-3">
+            Penelitian ini telah dipublikasikan secara resmi di <b>{{ p.journal }}</b> ({{ p.volume }}), mengevaluasi perbandingan model <i>Fine-Tuned IndoBERT</i> dan arsitektur hybrid <i>IndoBERT + SVM</i> untuk deteksi indikasi depresi pada teks media sosial berbahasa Indonesia.
+          </p>
+          <div class="cardx p-3 mb-3 bg-white">
+            <div class="row g-2 small text-mute">
+              <div class="col-sm-6"><i class="bi bi-journal-check text-success me-1"></i><b>Jurnal:</b> {{ p.journal }}</div>
+              <div class="col-sm-6"><i class="bi bi-bookmark text-primary me-1"></i><b>Edisi:</b> {{ p.volume }}</div>
+              <div class="col-sm-6"><i class="bi bi-upc-scan text-secondary me-1"></i><b>ISSN:</b> {{ p.issn }}</div>
+              <div class="col-sm-6"><i class="bi bi-link-45deg text-info me-1"></i><b>DOI:</b> <a href="{{ p.doi_url }}" target="_blank" rel="noopener" class="text-decoration-none">{{ p.doi }}</a></div>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <a href="{{ p.url }}" target="_blank" rel="noopener" class="btn btn-sage"><i class="bi bi-box-arrow-up-right me-1"></i>Buka Artikel di Jurnal Sinkron</a>
+            <a href="{{ p.doi_url }}" target="_blank" rel="noopener" class="btn btn-ghost"><i class="bi bi-link-45deg me-1"></i>Akses DOI</a>
+            <a href="/deteksi#performa" class="btn btn-ghost"><i class="bi bi-bar-chart-line me-1"></i>Lihat Detail Performa</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="cardx p-4 shadow-sm bg-white">
+            <h5 class="h6 mb-3 fw-bold"><i class="bi bi-check2-circle text-success me-2"></i>Temuan Utama Paper</h5>
+            <div class="d-flex flex-column gap-3 small text-mute">
+              <div class="d-flex gap-2">
+                <i class="bi bi-check-circle-fill text-success flex-shrink-0 mt-1"></i>
+                <span><b>Performa Setara:</b> Model S1 (73,20% akurasi, AUC 0,8212) dan S2 (73,71% akurasi, AUC 0,8088). Uji McNemar (p = 0,86) menyatakan perbedaannya tidak signifikan secara statistik.</span>
+              </div>
+              <div class="d-flex gap-2">
+                <i class="bi bi-check-circle-fill text-success flex-shrink-0 mt-1"></i>
+                <span><b>Hemat Penyimpanan 47.524×:</b> Pendekatan S2 (IndoBERT + Linear SVM) hanya membutuhkan 0,01 MB storage dibandingkan 475,24 MB pada model S1 penuh.</span>
+              </div>
+              <div class="d-flex gap-2">
+                <i class="bi bi-check-circle-fill text-success flex-shrink-0 mt-1"></i>
+                <span><b>Unggul atas 5 Baseline:</b> Keduanya melampaui metode TF-IDF konvensional (Linear SVM, Naive Bayes, Random Forest, Decision Tree, Gradient Boosting).</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="batas">
+    <div class="container">
+      <span class="eyebrow">Perlu Anda Ketahui</span>
+      <h2 class="mt-3 mb-4">Batasan yang jujur</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-stethoscope"></i></div>
+            <h5 class="h6">Bukan diagnosis</h5>
+            <p class="small text-mute mb-0">Hasil hanya gambaran awal dari pola bahasa. Diagnosis depresi hanya dapat
+              ditegakkan oleh psikolog atau psikiater.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-bullseye"></i></div>
+            <h5 class="h6">Akurasi terbatas</h5>
+            <p class="small text-mute mb-0">Akurasi terbaik sekitar 73,7% pada data uji, jadi sekitar 1 dari 4 prediksi
+              bisa keliru, terutama pada kalimat bernegasi atau puitis.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="cardx">
+            <div class="step"><i class="bi bi-lock"></i></div>
+            <h5 class="h6">Privasi teks</h5>
+            <p class="small text-mute mb-0">Teks yang Anda tulis hanya diproses untuk menghasilkan prediksi dan tidak
+              disimpan oleh aplikasi.</p>
+          </div>
+        </div>
+      </div>
+      <div class="note mt-4"><i class="bi bi-heart-pulse text-danger me-1"></i> Jika Anda atau seseorang di sekitar Anda
+        merasa kewalahan, bicaralah dengan tenaga profesional atau orang tepercaya. Layanan konseling psikologi
+        Kemenkes: <b>119 ext. 8</b>.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <span>© 2026 DepresiKU · Universitas Dian Nuswantoro</span>
+      <div class="d-flex flex-wrap gap-3 small">
+        <a class="text-decoration-none text-mute" href="{{ p.url }}" target="_blank" rel="noopener"><i class="bi bi-journal-text me-1"></i>Jurnal Sinkron</a>
+        <a class="text-decoration-none text-mute" href="{{ p.doi_url }}" target="_blank" rel="noopener">DOI: {{ p.doi }}</a>
+        <a class="text-decoration-none text-mute" href="/deteksi#tim">Tim peneliti</a>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
